@@ -10,11 +10,12 @@ import Container from '@mui/material/Container';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { receiveEvents } from '../../actions/events';
+import { useSelector } from 'react-redux';
 
 export default function EventList() {
   const [events, setEvents] = useState([]);
   const dispatch = useDispatch();
-  const [buttonText, setButtonText] = useState("Subscribe")
+  const authedUser = useSelector(state => state.authedUser);
 
   useEffect(() => {
     fetchEvents();
@@ -27,8 +28,19 @@ export default function EventList() {
     dispatch(receiveEvents(data));
   }
 
-  const handleButtonClick = (event) => {
-    console.log(event);
+  const handleButtonClick = (eventId) => {
+    let userId = authedUser._id;
+    fetch(`https://unify-s7jg.onrender.com/users/subscribe/${eventId}/${userId}`)
+      .then(async (response) => {
+        let res = await response.json();
+        if (typeof res == 'string') {
+          alert("Already subscribed!!")
+        } else {
+          alert("Subscribed successfully!")
+        }
+      }).catch((error) => {
+        alert(error);
+      });
   }
 
   return (
@@ -86,8 +98,8 @@ export default function EventList() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button onClick={handleButtonClick} size="small">
-                    {buttonText}
+                  <Button onClick={() => handleButtonClick(event._id)} size="small">
+                    Subscribe
                   </Button>
                 </CardActions>
               </Card>
