@@ -30,7 +30,7 @@ export default function Create() {
     }
     axios.post("https://unify-s7jg.onrender.com/events/", request)
       .then((response) => {
-        alert("Meeting created successfully. Check your mail for confirmation.")
+        alert("Meeting created successfully. Check your inbox for confirmation.")
         let eventId = response.data._id;
         let userId = authedUser._id;
         fetch(`https://unify-s7jg.onrender.com/users/organize/${eventId}/${userId}`)
@@ -51,6 +51,9 @@ export default function Create() {
       <Paper sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }} component="form" noValidate onSubmit={handleSubmit}>
         <Typography component="h3" variant="h4" align="center">
           Create a New Meeting
+        </Typography>
+        <Typography variant="subtitle2" align="center">
+          Please enter all the details.
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>

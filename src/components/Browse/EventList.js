@@ -36,7 +36,7 @@ export default function EventList() {
         if (typeof res == 'string') {
           alert("Already subscribed!!")
         } else {
-          alert("Subscribed successfully!")
+          alert("Subscribed successfully! Please check your inbox to save meeting details.")
         }
       }).catch((error) => {
         alert(error);
