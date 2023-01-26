@@ -31,18 +31,14 @@ export default function Create() {
     axios.post("https://unify-s7jg.onrender.com/events/", request)
       .then((response) => {
         alert("Meeting created successfully. Check your mail for confirmation.")
-        // let eventId = response.data._id;
-        // let user = JSON.parse(JSON.stringify(authedUser));
-        // let organizedEvents = user['organized'];
-        // organizedEvents.push(eventId);
-        // user['organized'] = organizedEvents;
-
-        // axios.put("https://unify-s7jg.onrender.com/users/update/", user)
-        //   .then((response) => {
-        //     console.log(response.data);
-        //   }).catch((error) => {
-        //     alert(error);
-        //   });
+        let eventId = response.data._id;
+        let userId = authedUser._id;
+        fetch(`http://localhost:8000/users/organize/${eventId}/${userId}`)
+          .then((response) => {
+            console.log(response.data);
+          }).catch((error) => {
+            alert(error);
+          });
         navigate("/browse");
       })
       .catch((error) => {
