@@ -33,7 +33,7 @@ export default function Create() {
         alert("Meeting created successfully. Check your mail for confirmation.")
         let eventId = response.data._id;
         let userId = authedUser._id;
-        fetch(`http://localhost:8000/users/organize/${eventId}/${userId}`)
+        fetch(`https://unify-s7jg.onrender.com/users/organize/${eventId}/${userId}`)
           .then((response) => {
             console.log(response.data);
           }).catch((error) => {
