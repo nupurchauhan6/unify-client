@@ -2,6 +2,9 @@ import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setAuthedUser } from '../../actions/authedUser';
 
 const sections = [
   { title: 'Home', url: '/' },
@@ -12,6 +15,11 @@ const sections = [
 ];
 
 function Header() {
+  const dispatch = useDispatch();
+
+  const handleButtonClick = (event) => {
+    dispatch(setAuthedUser(null));
+  }
 
   return (
     <React.Fragment>
@@ -42,6 +50,7 @@ function Header() {
               {section.title}
             </Link>
           ))}
+          <Button variant="contained" onClick={handleButtonClick}>Sign Out</Button>
         </div>
       </Toolbar>
     </React.Fragment>

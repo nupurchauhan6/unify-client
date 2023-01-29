@@ -12,13 +12,17 @@ import Typography from '@mui/material/Typography';
 import cover from './cover.svg';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { setAuthedUser } from '../../actions/authedUser';
 import jwt_decode from "jwt-decode";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SignInSide() {
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
+        handleLoader(true);
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const request = {
@@ -35,13 +39,28 @@ export default function SignInSide() {
             var decoded = jwt_decode(token);
             var obj = JSON.parse(decoded.sub.replace(/'/g, "\""))
             dispatch(setAuthedUser(obj));
+            handleLoader(false);
         }).catch((error) => {
-            alert(error);
+            handleLoader(false);
+            alert(error.response.data.detail);
         });
+    };
+
+    const [open, setOpen] = useState(false);
+    const handleLoader = (val) => {
+        setOpen(val);
     };
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                onClick={handleLoader}
+            >
+                <CircularProgress color="inherit" />
+                <span style = {{marginLeft: "10px"}}> Loading ...</span>
+            </Backdrop>
             <CssBaseline />
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box

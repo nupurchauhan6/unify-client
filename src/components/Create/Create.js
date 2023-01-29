@@ -53,7 +53,7 @@ export default function Create() {
           Create a New Meeting
         </Typography>
         <Typography variant="subtitle2" align="center">
-          Please enter all the details.
+          Please enter all the details. Otherwise server will throw error!
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
